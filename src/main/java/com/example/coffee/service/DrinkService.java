@@ -14,4 +14,6 @@ public interface DrinkService {
     DrinkDTO getById(Long id, int languageOrdinal);
     List<DrinkDTO> getAll();
     List<DrinkDTO> getByType(DrinkType drinkType, int languageOrdinal);
+    List<DrinkDTO> getByName(String name, int languageOrdinal);
+    List<DrinkDTO> filter(DrinkType drinkType, Integer priceFrom, Integer priceTo);
 }

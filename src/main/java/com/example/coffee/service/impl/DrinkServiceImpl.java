@@ -62,7 +62,32 @@ public class DrinkServiceImpl implements DrinkService {
 
     @Override
     public List<DrinkDTO> getByType(DrinkType drinkType, int languageOrdinal) {
+        List<Drink> drinks = repository.findDrinksByDrinkType(drinkType);
+        Language language = Language.getLanguage(languageOrdinal);
 
-        return DrinkMapper.INSTANCE.toDTOS(repository.findDrinksByDrinkType(drinkType));
+        if (drinks == null || drinks.isEmpty()) {
+            throw new NotFoundException(ResourceBundleLanguage.periodMessage(language, "entityNotFound"));
+        }
+
+
+        return DrinkMapper.INSTANCE.toDTOS(drinks);
+    }
+
+    @Override
+    public List<DrinkDTO> getByName(String name, int languageOrdinal) {
+        List<Drink> drinks = repository.findDrinksByName(name);
+        Language language = Language.getLanguage(languageOrdinal);
+
+        if (drinks == null || drinks.isEmpty()) {
+            throw new NotFoundException(ResourceBundleLanguage.periodMessage(language, "entityNotFound"));
+        }
+
+
+        return DrinkMapper.INSTANCE.toDTOS(drinks);
+    }
+
+    @Override
+    public List<DrinkDTO> filter(DrinkType drinkType, Integer priceFrom, Integer priceTo) {
+        return DrinkMapper.INSTANCE.toDTOS(repository.filter(drinkType.getId(), priceFrom, priceTo));
     }
 }

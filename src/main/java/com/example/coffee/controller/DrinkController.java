@@ -34,8 +34,19 @@ public class DrinkController {
         return ResponseEntity.ok(service.getAll());
     }
 
-    @GetMapping("/get/type")
+    @GetMapping("/drink/type")
     public ResponseEntity<?> getByType(@RequestBody DrinkType drinkType,@RequestHeader int languageOrdinal) {
         return  ResponseEntity.ok(service.getByType(drinkType, languageOrdinal));
+    }
+
+    @GetMapping("/drink/name")
+    public ResponseEntity<?> getByName(@RequestParam String name, @RequestHeader int languageOrdinal) {
+        return ResponseEntity.ok(service.getByName(name, languageOrdinal));
+    }
+
+    @GetMapping("/drink/filter")
+    public ResponseEntity<?> filter(@RequestBody DrinkType drinkType, @RequestParam Integer priceFrom,
+                                    @RequestParam Integer priceTo) {
+        return ResponseEntity.ok(service.filter(drinkType, priceFrom, priceTo));
     }
 }
